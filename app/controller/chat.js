@@ -1,5 +1,10 @@
+const puppeteerOptions = {
+    puppeteer: {
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    }
+};
 const { Client } = require('whatsapp-web.js');
-const client = new Client();
+const client = new Client(puppeteerOptions);
 const qrCode = require('qrcode');
 
 exports.LoginWa = async (req, res, next) => {
