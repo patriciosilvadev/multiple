@@ -17,4 +17,4 @@ app.use((req, res, next) => {
 
 app.use('/api', chat);
 
-app.listen(9090);
+app.listen(8080);
