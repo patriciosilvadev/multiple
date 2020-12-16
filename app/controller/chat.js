@@ -11,8 +11,11 @@ exports.LoginWa = async (req, res, next) => {
     client.on('qr', async (qr) => {
         var gambar = await qrCode.toDataURL(qr);
         var body = "<center><img src='" + gambar + "'></img><br/>scan untuk login</center>";
-        res.set('Content-Type', 'text/html');
-        res.send(Buffer.from(body));
+        
+        // res.setHeader('Content-Type', 'text/html');
+        // res.write(body);
+        // res.end();
+        res.json(qr)
     });
 
 }

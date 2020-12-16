@@ -1,1 +1,3 @@
-module.exports.chat = require('./chat')
+module.exports = app => {
+    app.use('/api', require('./api-wa.route'));
+}

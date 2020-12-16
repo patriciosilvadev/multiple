@@ -1,20 +1,6 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const app = require('express')();
+const server = require('http').createServer(app);
+const io = require('./app/config/socket.config')(server);
 
-const {
-    chat
-} = require('./app/routes')
-
-const app = express();
-
-app.use(bodyParser.json());
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-})
-
-app.use('/api', chat);
-
-app.listen(8080);
+require('./app/config/autoload')(app, io);
+server.listen(8080, () => console.log(`listening port ${8080}`));
