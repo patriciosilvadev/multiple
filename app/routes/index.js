@@ -1,3 +1,3 @@
-module.exports = app => {
-    app.use('/api', require('./api-wa.route'));
+module.exports = (app, io = null) => {
+    app.use('/api', require('./api-wa.route')(io));
 }

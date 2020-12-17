@@ -1,12 +1,20 @@
-module.exports = async (client, io = null) => {
+module.exports = async (client, io, number) => {
     const qrcode = require('qrcode');
-    
-    io.on('connection', socket => {
-        client.on('qr', (qr) => {
-            console.log('login', qr)
-            qrcode.toDataURL(qr, (err, url) => {
-                socket.emit('qrcode', { data: url });
-            })
-        });
+
+    client.on('qr', (qr) => {
+        console.log(`login from number ${number}`, qr)
+        qrcode.toDataURL(qr, (err, url) => {
+            io.emit(`qrcode-${number}`, {
+                image: url,
+                number: number
+            });
+        })
+    });
+
+    client.on('ready', () => {
+        console.log(`ready from number ${number}`);
+        io.emit(`ready-${number}`, {
+            data: 'server ready'
+        })
     });
 }

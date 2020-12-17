@@ -1,7 +1,16 @@
-const express = require('express');
-const router = express.Router();
-const chat = require('../controller/api-wa')
+module.exports = io => {
+    const express = require('express');
+    const router = express.Router();
+    const chat = require('../controller/api-wa')
 
-router.post('/send', chat.send);
+    const socket = (req, res, next) => {
+        req.io = io;
+        next();
+    }
 
-module.exports = router;
+    router.post('/send', chat.send);
+    router.get('/getAllClient', chat.getAllClient);
+    router.post('/createServer', socket, chat.createServer);
+
+    return router;
+}
